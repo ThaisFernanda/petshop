@@ -15,33 +15,31 @@ public class ConnectionFactory {
         try {
  
             String driverName = "com.mysql.jdbc.Driver";
-            String url = "jdbc:mysql://codeshouse.com.br:3306/codes475_petshop";
-            String usuario = "codes475_petshop";
-            String senha = "p3t3sh0p2016#";
+//            String url = "jdbc:mysql://codeshouse.com.br:3306/codes475_petshop";
+//            String usuario = "codes475_petshop";
+//            String senha = "p3t3sh0p2016#";
+            String url = "jdbc:mysql://localhost:3306/restaurante";
+            String usuario = "root";
+            String senha = "123mudar";
          
             Class.forName(driverName);
             conn = DriverManager.getConnection(url, usuario, senha);
-            System.out.println("Conex„o Estabelecida");
+            System.out.println("Conex√£o Estabelecida");
         } catch (ClassNotFoundException e) {
-        	System.out.println("Erro na conex„o com a base de dados"
+        	System.out.println("Erro na conex√£o com a base de dados"
         			+ " ClassNotFoundException Exception");
             e.printStackTrace();
         } catch (SQLException f) {
-        	System.out.println("Erro na conex„o com a base de dados - SQL Exception");
+        	System.out.println("Erro na conex√£o com a base de dados - SQL Exception");
             f.printStackTrace();
         }
         return conn;
     }
     
-    private static void close(Connection conn, PreparedStatement pstm, ResultSet rs) 
-    		throws Exception {
-        try {
-            if (rs != null) rs.close( );
-            if (pstm != null)pstm.close( );
-            if (conn != null)conn.close( );
-        } catch (Exception e) {
-            throw new Exception(e.getMessage( ));
-        }
-    }       
+    public static void close(Connection conn, PreparedStatement pstm, ResultSet rs){
+            try{if (rs != null) rs.close( );}catch (Exception e) {e.printStackTrace();}
+            try{if (pstm != null)pstm.close( );}catch (Exception e) {e.printStackTrace();}
+            try{if (conn != null)conn.close( );}catch (Exception e) {e.printStackTrace(); }       
          
+    }
 }
