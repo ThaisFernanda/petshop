@@ -25,7 +25,7 @@ public class FuncionarioRepositorioImpl implements IRepositorio<Funcionario> {
 		String sql = "INSERT INTO "+TABELA+" (logradouro, bairro, cidade, estado)"
 				+ "VALUES (?,?,?,?)";
 		String sql2 = "INSERT INTO "+TABELA2+" (nome, data_nascimento, email, telefone_fixo, telefone_celular, telefone_outro, cpf, cargo, tipo, id_endereco) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
+				+ "VALUES (?,?,?,?,?,?,?,?,?,(SELECT MAX(id_endereco) FROM endereco))";
 		PreparedStatement ps = null;
 		PreparedStatement ps2 = null;
 		try {
@@ -36,6 +36,8 @@ public class FuncionarioRepositorioImpl implements IRepositorio<Funcionario> {
 			ps.setString(2, entidade.getBairro());
 			ps.setString(3, entidade.getCidade());
 			ps.setString(4, entidade.getEstado());
+			
+			ps.execute();
 			//INSERT PESSOA	
 			ps2 = connection.prepareStatement(sql2);
 			ps2.setString(1, entidade.getNome());
