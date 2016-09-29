@@ -12,7 +12,14 @@ public class Pessoa extends SerVivo {
 	private String telefoneFixo;
 	private String telefoneCelular;
 	private String telefoneOutro;
+	private String tipo;
 	
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 	public String getEmail() {
 		return email;
 	}

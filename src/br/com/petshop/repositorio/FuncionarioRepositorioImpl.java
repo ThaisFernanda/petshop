@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 import br.com.petshop.modelo.Funcionario;
 import br.com.petshop.util.ConnectionFactory;
@@ -13,12 +16,56 @@ import br.com.petshop.util.ConnectionFactory;
 public class FuncionarioRepositorioImpl implements IRepositorio<Funcionario> {
 
 	private static Connection connection = null;
-	private static final String TABELA = "FUNCIONARIO";
+	private static final String TABELA = "endereco";
+	private static final String TABELA2 = "pessoa";
 	
 	@Override
 	public void salvar(Funcionario entidade) {
 		connection = ConnectionFactory.getConnection();
-		String sql = "INSERT INTO "+TABELA+" (NOME, CPF) VALUES (?,?)";
+		String sql = "INSERT INTO "+TABELA+" (logradouro, bairro, cidade, estado)"
+				+ "VALUES (?,?,?,?)";
+		String sql2 = "INSERT INTO "+TABELA2+" (nome, data_nascimento, email, telefone_fixo, telefone_celular, telefone_outro, cpf, cargo, tipo, id_endereco) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
+		PreparedStatement ps = null;
+		PreparedStatement ps2 = null;
+		try {
+			
+			//INSERT ENDEREÇO
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, entidade.getLogradouro());
+			ps.setString(2, entidade.getBairro());
+			ps.setString(3, entidade.getCidade());
+			ps.setString(4, entidade.getEstado());
+			//INSERT PESSOA	
+			ps2 = connection.prepareStatement(sql2);
+			ps2.setString(1, entidade.getNome());
+			
+			ps2.setDate(2, entidade.getDataNascimento());
+			
+			ps2.setString(3, entidade.getEmail());
+			ps2.setString(4, entidade.getTelefoneFixo());
+			ps2.setString(5, entidade.getTelefoneCelular());
+			ps2.setString(6, entidade.getTelefoneOutro());
+			ps2.setString(7, entidade.getCPF());
+			ps2.setString(8, entidade.getCargo());
+			ps2.setString(9, entidade.getTipo());
+			
+			
+			ps2.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			ConnectionFactory.close(connection, ps, null);
+		}
+		
+	}
+
+	@Override
+	public void atualizar(Funcionario entidade) {
+		connection = ConnectionFactory.getConnection();
+		String sql = "UPDATE "+TABELA+"SET nome=?, data_nascimento=?, email=?, telefone_fixo=?, telefone_celular=?, telefone_outro=?, cpf=?, cargo=?, tipo=?, id_endereco=?"
+				+ "WHERE id_pessoa = ? AND id_endereco = ?";
 		PreparedStatement ps = null;
 		
 		try {
@@ -31,12 +78,6 @@ public class FuncionarioRepositorioImpl implements IRepositorio<Funcionario> {
 		}finally {
 			ConnectionFactory.close(connection, ps, null);
 		}
-		
-	}
-
-	@Override
-	public void atualizar(Funcionario entidade) {
-		
 	}
 
 	@Override

@@ -15,22 +15,24 @@ public class ConnectionFactory {
         try {
  
             String driverName = "com.mysql.jdbc.Driver";
+            //BASE CODESHOUSE
 //            String url = "jdbc:mysql://codeshouse.com.br:3306/codes475_petshop";
 //            String usuario = "codes475_petshop";
 //            String senha = "p3t3sh0p2016#";
-            String url = "jdbc:mysql://localhost:3306/restaurante";
+            //BASE LOCAL
+            String url = "jdbc:mysql://localhost:3306/petshop";
             String usuario = "root";
-            String senha = "123mudar";
+            String senha = "";
          
             Class.forName(driverName);
             conn = DriverManager.getConnection(url, usuario, senha);
-            System.out.println("Conex√£o Estabelecida");
+            System.out.println("Conex„o Estabelecida");
         } catch (ClassNotFoundException e) {
-        	System.out.println("Erro na conex√£o com a base de dados"
+        	System.out.println("Erro na Conex„o com a base de dados"
         			+ " ClassNotFoundException Exception");
             e.printStackTrace();
         } catch (SQLException f) {
-        	System.out.println("Erro na conex√£o com a base de dados - SQL Exception");
+        	System.out.println("Erro na Conex„o com a base de dados - SQL Exception");
             f.printStackTrace();
         }
         return conn;
