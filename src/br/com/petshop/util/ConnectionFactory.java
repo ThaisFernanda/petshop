@@ -15,10 +15,12 @@ public class ConnectionFactory {
         try {
  
             String driverName = "com.mysql.jdbc.Driver";
+            
             //BASE CODESHOUSE
 //            String url = "jdbc:mysql://codeshouse.com.br:3306/codes475_petshop";
 //            String usuario = "codes475_petshop";
 //            String senha = "p3t3sh0p2016#";
+            
             //BASE LOCAL
             String url = "jdbc:mysql://localhost:3306/petshop";
             String usuario = "root";
